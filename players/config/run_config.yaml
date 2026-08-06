@@ -1,0 +1,114 @@
+# =====================================================================
+# Planner Selection
+# =====================================================================
+# Select exactly one planner configuration by uncommenting the
+# corresponding `planner_family` and `interaction_mode` pair.
+# Keep all other configurations commented out.
+# =====================================================================
+
+# ---------------------------------------------------------------------
+# SGTP — Proposed Method
+# ---------------------------------------------------------------------
+# Sampling-based Game-Theoretic Planning (SGTP), as proposed in the paper.
+# we need set the MPPI_POST_SELECT = True in `players/planner/planner_generators.py`,
+# otherwise it will be the same as standard MPPI.
+# 
+planner_family: "mppi"
+interaction_mode: "ibr"
+
+# ---------------------------------------------------------------------
+# Lattice Planner
+# ---------------------------------------------------------------------
+# Sampling-based spatiotemporal lattice planner operating in
+# non-reactive mode.
+#
+# planner_family: "lattice_planner"
+# interaction_mode: "nonreactive"
+
+
+# ---------------------------------------------------------------------
+# Race Stack
+# ---------------------------------------------------------------------
+# Race Stack baseline using the spline-based planner implementation.
+#
+# planner_family: "spliner"
+# interaction_mode: "nonreactive"
+
+
+# ---------------------------------------------------------------------
+# End2Race
+# ---------------------------------------------------------------------
+# Learning-based End2Race planner operating in non-reactive mode.
+#
+# planner_family: "end2race"
+# interaction_mode: "nonreactive"
+
+
+# ---------------------------------------------------------------------
+# Conditional Flow Matching
+# ---------------------------------------------------------------------
+# Conditional Flow-Matching (CFM) planner operating in non-reactive mode.
+#
+# planner_family: "flow_planner"
+# interaction_mode: "nonreactive"
+
+
+# ---------------------------------------------------------------------
+# Standard MPPI / Biased-MPPI
+# ---------------------------------------------------------------------
+# Standard Model Predictive Path Integral (MPPI) control without feasibility selection
+# we need set the MPPI_POST_SELECT = False in `players/planner/planner_generators.py`,
+# 
+# To run Biased-MPPI, configure `mppi_bias_mode_ego` and
+# `mppi_bias_mode_opp` through the command-line arguments. Both options
+# default to `none`, which corresponds to standard MPPI.
+#
+# planner_family: "mppi"
+# interaction_mode: "nonreactive"
+
+
+# ---------------------------------------------------------------------
+# EVO-MPCC / IBR with EVO-MPCC
+# ---------------------------------------------------------------------
+# EVO-MPCC used as the best-response solver within an Iterative Best
+# Response framework.
+#
+# planner_family: "mpc"
+# interaction_mode: "nonreactive" # for EVO-MPCC without IBR
+# 
+# planner_family: "mpc"
+# interaction_mode: "ibr" # for EVO-MPCC with IBR
+
+
+
+end2race: False # here is only used for end2race data collection, not for end2race planner
+ibr_time: 2 # number of iterations for IBR planner
+opp_speed_scale: 0.9 # scale down opponent speed
+
+# config paths
+ocp_config: "players/config/ocp_config.yaml"
+config: "players/config/pp_config.yaml"
+game_config: "players/config/game_cost_config.yaml"
+
+# vehicle params
+wheel_base: 0.307 
+length: 0.58
+width: 0.31
+v_max: 12.0
+a_max: 10.0
+delta_max: 0.4
+
+# other params
+eval_case_id: normal_single_eval
+collect_pairwise_rows: false # now is only used as a flag to disable tqdm progress bar for batch running
+raceline: "racing_line"
+dt: 0.01  # env dt, do not change to bigger
+v_global_limit: 0.7 # align with ros setting
+rand_seed: 6300
+mpc_dt: 0.05 # only for flow dt between two states
+render_margin: 800
+video_capture_every: 10
+out_fps: 10
+save_gym: false # it's an old flag to save gym video, not used anymore because it's time consuming, and the gym color is not my taste
+tracker_steps: 1
+

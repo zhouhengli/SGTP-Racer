@@ -1,0 +1,67 @@
+{
+  "time": {
+    "past_time_horizon_sec": 0.5,
+    "fut_time_horizon_sec": 1.0,
+    "num_past_poses": 10,
+    "num_fut_poses_cond": 15,
+    "num_future_poses": 40,
+    "gap_N_frames": 100,
+    "threshold_sec": 0.01
+  },
+
+  "state": {
+    "mpc_states_dim": 8,
+    "opponent_states_dim": 5,
+    "invalid_timestamp": -1.0,
+    "inf_val": 0.0,
+    "base_ratio": 0.8,
+    "narrow_side_factor": 0.4
+  },
+
+  "agents": {
+    "num_of_agents": "4"
+  },
+
+  "environment": {
+    "opp_radius": 12,
+    "query_forward_m": 30,
+    "query_back_m": 12
+  },
+
+  "racing_line": {
+    "racing_line_points": 150,
+    "fields": [
+      "id",
+      "s_m",
+      "d_m",
+      "x_m",
+      "y_m",
+      "d_right",
+      "d_left",
+      "psi_rad",
+      "kappa_radpm",
+      "vx_mps",
+      "ax_mps2"
+    ]
+  },
+
+  "obstacles": {
+    "fields": [
+      "id",
+      "s_start",
+      "s_end",
+      "d_right",
+      "d_left",
+      "s_center",
+      "d_center",
+      "vs"
+    ]
+  },
+
+  "state_map": {
+    "GB_TRACK": 0,
+    "TRAILING": 1,
+    "OVERTAKE": 2,
+    "BLOCKING": 3
+  }
+}

@@ -1,0 +1,261 @@
+model:
+  _target_: players.planner.flow_planner.model.flow_planner_model.flow_planner.FlowPlanner
+  neighbor_num: 3
+  neighbor_pred_num: 0
+  lane_num: 10
+  cfg_neighbor_num: 10
+  cfg_prob: 0.3
+  cfg_weight: 1.8
+  cfg_type: neighbors
+  future_len: 24
+  action_len: 6
+  action_overlap: 3
+  state_dim: 4
+  model_type: x_start
+  flow_ode:
+    _target_: players.planner.flow_planner.model.flow_planner_model.flow_utils.flow_ode.FlowODE
+    path:
+      _target_: flow_matching.path.affine.AffineProbPath
+      scheduler:
+        _target_: flow_matching.path.scheduler.CondOTScheduler
+    time_sampler:
+      _target_: players.planner.flow_planner.model.model_utils.time_sampler.TimeSampler
+      sample_method: uniform
+      device: ${device}
+      eps: 0.001
+      alpha: 1.0
+      beta: 1.5
+    cfg_weight: ${..cfg_weight}
+    sample_steps: 5
+    sample_method: midpoint
+    sample_temperature: 0.8
+  assemble_method: average
+  obs_normalizer:
+    _target_: players.planner.flow_planner.data.normalization.obs_normalize.ObservationNormalizer
+    config: ${normalization_stats}
+  state_normalizer:
+    _target_: players.planner.flow_planner.data.normalization.state_normalize.StateNormalizer
+    config: ${normalization_stats}
+    future_downsampling_method: ${data.dataset.train.future_downsampling_method}
+    predicted_neighbor_num: ${data.dataset.train.predicted_neighbor_num}
+  data_processor:
+    _target_: players.planner.flow_planner.model.model_utils.input_preprocess.ModelInputProcessor
+    future_len: ${..future_len}
+    obs_normalizer: ${..obs_normalizer}
+    state_normalizer: ${..state_normalizer}
+    neighbor_pred_num: ${..neighbor_pred_num}
+  model_encoder:
+    _target_: players.planner.flow_planner.model.flow_planner_model.encoder.FlowPlannerEncoder
+    encoder_hidden_dim: 164
+    with_ego_history: false
+    neighbor_encoder:
+      _target_: players.planner.flow_planner.model.modules.encoder_modules.AgentFusionEncoder
+      cond_time_len: 15
+      drop_path_rate: 0.3
+      hidden_dim: ${..encoder_hidden_dim}
+      layer_num: 3
+      tokens_mlp_dim: 64
+      channels_mlp_dim: 128
+    lane_encoder:
+      _target_: players.planner.flow_planner.model.modules.encoder_modules.LaneFusionEncoder
+      lane_points_num: 15
+      drop_path_rate: 0.3
+      hidden_dim: ${..encoder_hidden_dim}
+      layer_num: 3
+      tokens_mlp_dim: 64
+      channels_mlp_dim: 128
+    action_length: ${..action_len}
+    action_overlap: ${..action_overlap}
+    lane_num: 10
+    lane_dim: 7
+    neighbor_agent_num: ${..neighbor_num}
+    neighbor_pred_num: ${..neighbor_pred_num}
+  model_decoder:
+    _target_: players.planner.flow_planner.model.flow_planner_model.decoder.FlowPlannerDecoder
+    hidden_dim: 184
+    t_embedder:
+      _target_: players.planner.flow_planner.model.modules.decoder_modules.TimestepEmbedder
+      hidden_size: ${model.model_decoder.hidden_dim}
+    depth: 3
+    agents_hidden_dim: ${..model_encoder.encoder_hidden_dim}
+    lane_hidden_dim: ${..model_encoder.encoder_hidden_dim}
+    heads: 8
+    enable_attn_dist: true
+    act_pe_type: fixed_sin
+    device: ${device}
+    neighbor_num: ${..neighbor_num}
+    neighbor_pred_num: ${..neighbor_pred_num}
+    lane_num: ${..lane_num}
+    cfg_neighbor_num: ${..cfg_neighbor_num}
+    future_len: ${..future_len}
+    action_len: ${..action_len}
+    action_overlap: ${..action_overlap}
+    state_dim: ${..state_dim}
+core:
+  _target_: players.planner.flow_planner.core.flow_matching_core.FlowMatchingCore
+  device: ${device}
+  input_aug:
+    _target_: players.planner.flow_planner.data.augmentation.augmentation.RacingDataAugment
+    state_aug:
+      _target_: players.planner.flow_planner.data.augmentation.state_aug.StatePerturbation
+      augment_prob: 0.5
+    map_aug: null
+    device: ${device}
+  ego_planning_loss: 1.0
+  consistency_loss: 0.5
+data:
+  dataset:
+    train:
+      _target_: players.planner.flow_planner.data.dataset.dataloader_racing_ros.RacingDataset
+      data_dir: ${oc.env:TRAINING_DATA}
+      data_list: ${oc.env:TRAINING_JSON}
+      past_neighbor_num: ${model.neighbor_num}
+      predicted_neighbor_num: ${model.neighbor_pred_num}
+      future_len: ${model.future_len}
+      cond_time_len: ${model.model_encoder.neighbor_encoder.cond_time_len}
+      future_downsampling_method: uniform
+  input_aug:
+    _target_: players.planner.flow_planner.data.augmentation.augmentation.RacingDataAugment
+    state_aug:
+      _target_: players.planner.flow_planner.data.augmentation.state_aug.StatePerturbation
+      augment_prob: 0.5
+    device: ${device}
+normalization_stats:
+  ego:
+    log: {}
+    uniform:
+      mean:
+      - 5
+      - 0
+      - 0
+      - 0
+      std:
+      - 10
+      - 10
+      - 1
+      - 1
+  neighbor:
+    log: {}
+    uniform:
+      mean:
+      - 5
+      - 0
+      - 0
+      - 0
+      std:
+      - 10
+      - 10
+      - 1
+      - 1
+  ego_current:
+    mean:
+    - 5
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    std:
+    - 10
+    - 10
+    - 1
+    - 1
+    - 10
+    - 10
+    - 5
+    - 5
+    - 1
+    - 1
+  neighbor_past:
+    mean:
+    - 5
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    std:
+    - 10
+    - 10
+    - 1
+    - 1
+    - 3
+    - 1
+  neighbor_future:
+    mean:
+    - 5
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    std:
+    - 10
+    - 10
+    - 1
+    - 1
+    - 3
+    - 1
+  racing_lines:
+    mean:
+    - 30
+    - 30
+    - 0
+    - 0
+    - 0
+    - 0
+    - 0
+    std:
+    - 90
+    - 90
+    - 1
+    - 1
+    - 1
+    - 1
+    - 10
+recorder:
+  tensorboard:
+    _target_: players.planner.flow_planner.recorder.tensorboard.TensorboardRecorder
+    save_path: ${oc.env:TENSORBOARD_LOG_PATH}
+    rank: ${oc.env:RANK,0}
+optimizer:
+  _target_: torch.optim.AdamW
+  _convert_: all
+  lr: 0.0005
+scheduler:
+  _target_: players.planner.flow_planner.core.common.train_scheduler.CosineAnnealingWarmUpRestarts
+  epoch: ${train.epoch}
+  warm_up_epoch: 5
+ema:
+  _target_: timm.utils.ModelEma
+  decay: 0.999
+  device: ${device}
+project_root: ${oc.env:PROJECT_ROOT}
+save_dir: ${oc.env:SAVE_DIR}/outputs/${project}/${job_name}/${now:%Y-%m-%d_%H-%M-%S}
+save_every_since: 0
+resume_path: null
+pretrained_checkpoint: null
+project: FlowGamerTraining
+job_name: players.planner_standard
+logger_level: info
+seed: 3402
+device: cuda
+num_workers: 12
+use_wandb: false
+pin_mem: true
+train:
+  batch_size: 2000
+  epoch: 480
+  save_utd: 80
+ddp:
+  distributed: false
+  world_size: ${oc.env:WORLD_SIZE}
+  rank: ${oc.env:LOCAL_RANK}
+  init_process_group: nccl
+  addr: ${oc.env:MASTER_ADDR, localhost}
+  port: ${oc.env:MASTER:PORT, 29529}
+model_type: x_start

@@ -1,0 +1,30 @@
+# Lattice Planner Parameters
+lh_grid_lb: -0.3
+lh_grid_ub: 4.0
+traj_points: 25
+traj_v_scale: 1.0
+traj_v_span_min: 0.1
+traj_v_span_max: 1.0
+traj_v_span_num: 25
+
+# Cost Functions
+get_follow_optim_cost: true
+get_map_collision: true
+get_similarity_cost: true
+weights_num: 4
+ittc_thres: 2.0
+scan_num: 144
+
+# Parameter Configuration
+params_num: !!python/tuple
+- 1
+- 4
+params_name: !!python/tuple
+- traj_v_scale
+- cost_weights
+params_dict:
+  '0': speed
+  '1': follow_optim
+  '2': abs_speed_reward
+  '3': curvature_speed_punish
+  '4': opponent_collision

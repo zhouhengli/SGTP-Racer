@@ -1,0 +1,6 @@
+flow_cond_config: players/planner/flow_planner/data_processor_config.json
+flow_config_path: checkpoint/config.yaml
+flow_ckpt_path: checkpoint/latest.pth
+flow_batch: 1
+flow_max_cond_opps: 3
+mpc_dt: 0.05

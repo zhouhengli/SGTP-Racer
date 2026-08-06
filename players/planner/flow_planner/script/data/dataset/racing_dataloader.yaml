@@ -1,0 +1,10 @@
+train:
+  _target_: players.planner.flow_planner.data.dataset.dataloader_racing_ros.RacingDataset
+  data_dir: ${oc.env:TRAINING_DATA}
+  data_list: ${oc.env:TRAINING_JSON}
+  past_neighbor_num: ${model.neighbor_num}
+  predicted_neighbor_num: ${model.neighbor_pred_num}
+  future_len: ${model.future_len}
+  cond_time_len: ${model.model_encoder.neighbor_encoder.cond_time_len}
+  future_downsampling_method: uniform
+  

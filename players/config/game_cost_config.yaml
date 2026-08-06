@@ -1,0 +1,10 @@
+game_block_cost:
+  contest_s_gap: 8.0
+  longitudinal_weight: 2.0
+  contest_weight: 1.0
+  block_weight: 10.0
+  role_s_margin: 1.0
+  safety_weight: 50.0
+  safe_dist: 1.0
+  tail_ratio: 0.3
+  game_cost_weight: 60.0

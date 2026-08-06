@@ -1,0 +1,38 @@
+# ================================
+# Python cache & build artifacts
+# ================================
+__pycache__/
+*.pyc
+*.egg-info/
+.ipynb_checkpoints/
+
+# ================================
+# IDE / Editor configs
+# ================================
+.vscode/
+
+# ================================
+# Checkpoints / outputs / cache
+# ================================
+outputs/
+cache/
+gym_output/
+
+# ================================
+# Logs
+# ================================
+logs/
+*.log
+data_logs/
+results/
+eval_results/
+
+# ================================
+# Media / assets
+# ================================
+assets/
+images/
+media/
+docs/
+exp_vis/
+analysis/data/

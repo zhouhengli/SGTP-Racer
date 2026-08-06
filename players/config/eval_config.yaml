@@ -1,0 +1,161 @@
+algorithm:
+  # ===================================================================
+  # Planner Selection
+  # ===================================================================
+  # Select exactly one planner configuration by uncommenting its
+  # `planner_family`, `interaction_mode`, and `method` entries.
+  # Keep every other planner configuration commented out.
+  #
+  # The method name follows:
+  #   method: "<planner_family>_<interaction_mode>"
+  # ===================================================================
+
+  # -------------------------------------------------------------------
+  # SGTP — Proposed Method
+  # -------------------------------------------------------------------
+  # Sampling-based Game-Theoretic Planning (SGTP), as proposed in the
+  # paper.
+  #
+  # Required settings:
+  #   players/planner/planner_generators.py
+  #     MPPI_POST_SELECT = True
+  #     USE_OPP_PRED = True
+  #
+  #   players/config/game_cost_config.yaml
+  #     game_cost_weight: 60.0
+  #
+  # Enabling MPPI_POST_SELECT activates feasibility-based trajectory
+  # selection. Enabling USE_OPP_PRED supplies predicted opponent
+  # trajectories to the game-aware cost.
+  #
+  planner_family: "mppi"
+  interaction_mode: "ibr"
+  method: "mppi_ibr"
+
+  # -------------------------------------------------------------------
+  # Lattice Planner
+  # -------------------------------------------------------------------
+  # Sampling-based spatiotemporal lattice planner operating in
+  # non-reactive mode.
+  #
+  # planner_family: "lattice_planner"
+  # interaction_mode: "nonreactive"
+  # method: "lattice_planner_nonreactive"
+
+  # -------------------------------------------------------------------
+  # Race Stack with Spliner
+  # -------------------------------------------------------------------
+  # Race Stack baseline using the spline-based planner implementation
+  # in non-reactive mode.
+  #
+  # planner_family: "spliner"
+  # interaction_mode: "nonreactive"
+  # method: "spliner_nonreactive"
+
+  # -------------------------------------------------------------------
+  # End2Race
+  # -------------------------------------------------------------------
+  # Learning-based End2Race planner operating in non-reactive mode.
+  #
+  # planner_family: "end2race"
+  # interaction_mode: "nonreactive"
+  # method: "end2race_nonreactive"
+
+  # -------------------------------------------------------------------
+  # Conditional Flow-Matching Planner
+  # -------------------------------------------------------------------
+  # Conditional Flow-Matching (CFM) planner operating in non-reactive
+  # mode.
+  #
+  # planner_family: "flow_planner"
+  # interaction_mode: "nonreactive"
+  # method: "flow_planner_nonreactive"
+
+  # -------------------------------------------------------------------
+  # Standard MPPI / Biased-MPPI
+  # -------------------------------------------------------------------
+  # Model Predictive Path Integral control using conventional weighted
+  # control aggregation.
+  #
+  # Required settings:
+  #   players/planner/planner_generators.py
+  #     MPPI_POST_SELECT = False
+  #     USE_OPP_PRED = False
+  #
+  #   players/config/game_cost_config.yaml
+  #     game_cost_weight: 0.0
+  #
+  # With the default bias modes (`none`), this configuration runs
+  # Standard MPPI.
+  #
+  # To run Biased-MPPI, set both command-line options to `ancillary`:
+  #   --mppi_bias_mode_ego="ancillary"
+  #   --mppi_bias_mode_opp="ancillary"
+  #
+  # planner_family: "mppi"
+  # interaction_mode: "nonreactive"
+  # method: "mppi_nonreactive"
+
+  # -------------------------------------------------------------------
+  # EVO-MPCC
+  # -------------------------------------------------------------------
+  # EVO-MPCC operating independently without iterative best response.
+  #
+  # planner_family: "mpc"
+  # interaction_mode: "nonreactive"
+  # method: "mpc_nonreactive"
+
+  # -------------------------------------------------------------------
+  # Iterative Best Response with EVO-MPCC
+  # -------------------------------------------------------------------
+  # EVO-MPCC used as the best-response solver within an Iterative Best
+  # Response framework.
+  #
+  # planner_family: "mpc"
+  # interaction_mode: "ibr"
+  # method: "mpc_ibr"
+
+  num_agents: 3
+  ibr_time: 2
+
+  mppi_bias_mode_ego: none # ancillary
+  mppi_bias_mode_opp: none
+
+  # usually we don't need to change these parameters. They are here just for record.
+  render: false # during evaluation, we just save metadata of trajectories and metrics, no need to render.
+  save_video: false # during evaluation, we just save metadata of trajectories and metrics, no need to render.
+  dt: 0.01 # env step time duration
+  end2race: false # it's flag for end2race dataset generation, don't use during normal evaluation, just keep it here for consistency
+  save_gym: false # it's an old flag to save gym video, not used anymore because it's time consuming, and the gym color is not my taste
+  ocp_config: players/config/ocp_config.yaml
+  config: players/config/pp_config.yaml
+  game_config: players/config/game_cost_config.yaml
+  tracker_steps: 1
+  wheel_base: 0.307
+  length: 0.58
+  width: 0.31
+  v_max: 12.0
+  a_max: 10.0
+  delta_max: 0.4
+  render_margin: 800
+  video_capture_every: 10
+  out_fps: 10
+
+# usually we don't need to change these parameters. They are here just for record.
+num_workers: 3
+split_key: test
+
+rollout:
+  v_global_limit: 0.7
+  opp_speed_scale: 0.9
+  interval_idx: 20 # for table running
+
+# usually we don't need to change these parameters. They are here just for record.
+parallel_backend: process # DO NOT CHANGE TO "thread"
+output_root: results/eval
+split_path: config/data_split_final.yaml
+map_root: MapZoo
+waypoint_delimiter: ;
+waypoint_skiprows: 1
+raceline: racing_line
+opp_raceline: racing_line

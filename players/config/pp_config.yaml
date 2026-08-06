@@ -1,0 +1,14 @@
+# Tracker Configuration (Pure Pursuit)
+tracker_steps: 1
+vel_scale: 1.0
+
+# Pure Pursuit Specific Parameters
+minL: 0.5
+maxL: 2.0
+Lscale: 9.0
+minP: 0.7
+maxP: 1.0
+Pscale: 9.0
+D: 0.2
+interpScale: 15
+

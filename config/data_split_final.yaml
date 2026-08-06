@@ -1,0 +1,35 @@
+train:
+  - Spielberg
+  - Budapest
+  - Montreal
+  - Austin
+  - IMS
+  - Sepang
+  - Silverstone
+  - YasMarina
+  - Sochi
+  - warehouse_v2
+  - SaoPaulo
+  - Melbourne
+  - Norisring
+  - MexicoCity
+  - Zandvoort
+  - overtake_map
+  - Shanghai
+  - Spa
+  - Sakhir
+  - Catalunya
+  - warehouse_v0
+  - hangar
+  - torino
+  - mtl
+  - Monza
+
+test:
+  - warehouse_v1
+  - berlin
+  - BrandsHatch
+  - f
+  - Oschersleben
+  - MoscowRaceway
+  - Nuerburgring

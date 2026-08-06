@@ -1,0 +1,21 @@
+num_samples: 128
+N: 12
+horizon: 1.2
+v_max: 10.0
+a_max: 3.0
+lambda_: 2.9896380083439036
+sigma:
+- 0.33544330947141326
+- 0.02488809269378376
+cost_weights:
+  opp_cost_weight: 4.0
+  running:
+    track: 4.0
+    heading: 47.75191760372449
+    speed: 39.47753257823394
+    u_accel: 8.430877961556272
+    u_steer: 20.0
+    du_accel: 1.0
+    du_steer: 19.2629524343753
+
+
