@@ -1,0 +1,3 @@
+[submodule "MapZoo"]
+	path = MapZoo
+	url = git@github.com:zhouhengli/MapZoo.git
