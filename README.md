@@ -27,17 +27,25 @@ This repository provides an implementation and visualization toolkit for the **S
   <tr>
     <td align="center" width="50%">
       <img src="./img/teaser.png" width="420" />
+		<br/>
+      	<b>(a)</b> Teaser
     </td>
     <td align="center" width="50%">
       <img src="./img/10agents.gif" width="420" />
+		<br/>
+      	<b>(b)</b> 10 Vehicles
     </td>
   </tr>  
   <tr>
     <td align="center" width="50%">
       <img src="./img/9agents.gif" width="420" />
+				<br/>
+      	<b>(c)</b> 9 Vehicles
     </td>
     <td align="center" width="50%">
       <img src="./img/8agents.gif" width="420" />
+		<br/>
+      	<b>(d)</b> 8 Vehicles
     </td>
   </tr>
 </table>
