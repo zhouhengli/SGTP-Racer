@@ -11,7 +11,7 @@ os.chdir(script_folder)
 setuptools.setup(
     name="SGTP_Racer",
     version="1.0.0",
-    author="Zhouheng Li: https://zhouhengli.github.io/",
+    author="anonymous",
     packages=find_packages(),
     package_dir={"": "."},
     classifiers=[

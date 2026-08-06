@@ -21,7 +21,7 @@
 
 > **TL;DR**: SGTP enables real-time multi-vehicle planning and generates diverse interactive racing behaviors, including defensive blocking, wheel-to-wheel racing, and opportunistic overtaking, while supporting smooth and safe transitions among them. 
 
-This repository provides an implementation and visualization toolkit for the **Sampling-based Game-Theoretic Planning (SGTP) framework** introduced in the paper, “[SGTP: Sampling-based Game-Theoretic Planning for Real-Time Multi-Vehicle Autonomous Racing](https://arxiv.org/abs/2607.25388v1).” It also includes implementations of several baseline methods, forming a benchmark suite for evaluating multi-vehicle interaction planning algorithms. The benchmark uses a diverse collection of racetrack maps from [MapZoo](https://github.com/zhouhengli/MapZoo).
+This repository provides an implementation and visualization toolkit for the **Sampling-based Game-Theoretic Planning (SGTP) framework** introduced in the paper, “[SGTP: Sampling-based Game-Theoretic Planning for Real-Time Multi-Vehicle Autonomous Racing](https://arxiv.org/abs/2607.25388v1).” It also includes implementations of several baseline methods, forming a benchmark suite for evaluating multi-vehicle interaction planning algorithms. The benchmark uses a diverse collection of racetrack maps from [MapZoo](https://github.com/anonymous/MapZoo).
 
 <table>
   <tr>
@@ -48,17 +48,17 @@ This repository provides an implementation and visualization toolkit for the **S
 
 The project uses a Conda environment and has been tested on both an NVIDIA GeForce RTX 4060 and a MacBook Air with an Apple M3 chip. A CUDA-capable NVIDIA GPU is strongly recommended for achieving the best performance and reproducing the reported real-time planning results.
 
-This repository includes [MapZoo](https://github.com/zhouhengli/MapZoo) as a Git submodule, providing a diverse collection of racetrack maps. Clone the repository together with all required submodules:
+This repository includes [MapZoo](https://github.com/anonymous/MapZoo) as a Git submodule, providing a diverse collection of racetrack maps. Clone the repository together with all required submodules:
 
 ```bash
-git clone --recurse-submodules https://github.com/zhouhengli/SGTP-Racer.git SGTP-Racer
+git clone --recurse-submodules https://github.com/anonymous/SGTP-Racer.git SGTP-Racer
 cd SGTP-Racer
 ```
 
 Because this repository includes pretrained checkpoints, cloning via SSH is recommended for a more reliable transfer: 
 
 ```bash
-git clone --recurse-submodules git@github.com:zhouhengli/SGTP-Racer.git SGTP-Racer
+git clone --recurse-submodules git@github.com:anonymous/SGTP-Racer.git SGTP-Racer
 ```
 
 ## 🛠️ Configure
@@ -387,29 +387,4 @@ Many thanks to the excellent open-source repositories listed below:
 
 - [TBA]
 
-Please contact [Zhouheng Li](https://zhouhengli.github.io) if you have any questions or suggestions. If you encounter any issues or have questions during deployment, feel free to open an issue or submit a pull request—contributions and feedback are very welcome.
-
-## 📑 Citations
-
-If you find this project useful for your research, please consider citing the following papers :)
-
-```
-@misc{li2026sgtpsamplingbasedgametheoreticplanning,
-      title={SGTP: Sampling-based Game-Theoretic Planning for Real-Time Multi-Vehicle Autonomous Racing}, 
-      author={Zhouheng Li and Fangguo Zhao and Mattia Piccinini and Baha Zarrouki and Yuan Gao and Zitong Shan and Johannes Betz and Chen Lv and Lei Xie},
-      year={2026},
-      eprint={2607.25388},
-      archivePrefix={arXiv},
-      url={https://arxiv.org/abs/2607.25388}, 
-}
-```
-
-```
-@article{Li2025EVOMPCC,
-  title   = {EVO-MPCC: Enhanced Velocity Optimization with Learning-Based Auto-Tuning for Real-Time Vehicle Trajectory Planning},
-  author  = {Li, Zhouheng and Zhou, Bei and Piccinini, Mattia and Hu, Cheng and Zarrouki, Baha and Mangharam, Rahul and Xie, Lei},
-  year    = {2025},
-  doi     = {10.2139/ssrn.6127037},
-  url     = {https://ssrn.com/abstract=6127037},
-}
-```
+Please contact anonymous if you have any questions or suggestions. If you encounter any issues or have questions during deployment, feel free to open an issue or submit a pull request—contributions and feedback are very welcome.

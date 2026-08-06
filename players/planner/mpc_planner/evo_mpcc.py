@@ -67,7 +67,7 @@ MPC_USE_DEBUG_VALUE_ON_FAILURE = True
 
 class MPCPlanner:
     """EVO-MPCC style racing MPCC planner.
-    https://github.com/zhouhengli/EVO-MPCC
+    https://github.com/anonymous/EVO-MPCC
     """
 
     def __init__(self, conf, map_path, wpt_path, wb, v_scale, max_opps):
@@ -285,7 +285,7 @@ class MPCPlanner:
                 cost += float(MPC_W_DACCEL) * da * da
                 cost += float(MPC_W_DSTEER) * ddelta * ddelta
 
-        # we adopt tvc mode of mpcc for overtaking: https://github.com/zhouhengli/EVO-MPCC/blob/main/src/evo-mpcc_planner/src/nonlinear_mpc_casadi/scripts/Nonlinear_MPC.py
+        # we adopt tvc mode of mpcc for overtaking: https://github.com/anonymous/EVO-MPCC/blob/main/src/evo-mpcc_planner/src/nonlinear_mpc_casadi/scripts/Nonlinear_MPC.py
         cost += float(MPC_W_SPEED) * (self.X[3, N] - v_ref) * (self.X[3, N] - v_ref)
         self.opti.subject_to(self.S[0, N] >= self.S0)
         self.opti.subject_to(self.S[0, N] <= self.S0 + float(MPC_PROGRESS_WINDOW))

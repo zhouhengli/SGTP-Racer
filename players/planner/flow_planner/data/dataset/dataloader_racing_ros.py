@@ -1,4 +1,4 @@
-# Note: Some comments may be outdated. If comments differ from the implementation, debug the call flow or contact the author: Zhouheng Li (https://zhouhengli.github.io/).
+# Note: Some comments may be outdated. If comments differ from the implementation, debug the call flow or contact the author: anonymous.
 
 import numpy as np
 from torch.utils.data import Dataset
