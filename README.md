@@ -46,7 +46,7 @@ This repository provides an implementation and visualization toolkit for the **S
 
 ## 🪄 Quickstart
 
-The project uses a Conda environment and has been tested on both an NVIDIA GeForce RTX 4060 and a MacBook Air with an Apple M3 chip. A CUDA-capable NVIDIA GPU is strongly recommended for achieving the best performance and reproducing the reported real-time planning results.
+The project uses a Conda environment and has been tested on systems equipped with NVIDIA GeForce RTX 4060 and RTX 3090 GPUs, as well as on a MacBook Air powered by an Apple M3 chip. A CUDA-capable NVIDIA GPU is **strongly recommended** for achieving the best performance and reproducing the reported real-time planning results.
 
 This repository includes [MapZoo](https://github.com/zhouhengli/MapZoo) as a Git submodule, providing a diverse collection of racetrack maps. Clone the repository together with all required submodules:
 
